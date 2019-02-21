@@ -101,14 +101,14 @@ export default class MIPGroupSelection extends CustomElement {
    * 选项绑定点击事件，点击修改 MIP data 并触发 selected 事件
    *
    */
-  // bindItemClickEvent () {
-  //   util.event.delegate(this.element, '.mip-group-selection-item', 'click', e => {
-  //     let itemData = e.target && e.target.dataset
-  //     e.data = itemData
-  //     MIP.setData(e.data)
-  //     viewer.eventAction.execute('selected', this.element, e)
-  //   })
-  // }
+  bindItemClickEvent () {
+    util.event.delegate(this.element, '.mip-group-selection-item', 'click', e => {
+      let itemData = e.target && e.target.dataset
+      e.data = itemData
+      MIP.setData(e.data)
+      viewer.eventAction.execute('selected', this.element, e)
+    })
+  }
 
   firstInviewCallback () {
     let el = this.element
@@ -126,7 +126,7 @@ export default class MIPGroupSelection extends CustomElement {
       // 绑定侧边栏快捷选择事件
       // this.bindSidebarClickEvent()
       // 绑定列表元素选择事件
-      // this.bindItemClickEvent()
+      this.bindItemClickEvent()
     }).catch(log.warn)
   }
 }
