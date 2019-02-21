@@ -133,9 +133,9 @@ export default class MIPGroupSelection extends CustomElement {
       // 修改最下方分组的样式，增加 marginBottom, 保证滚动后分组标题可以在页面最上方
       this.modifyMarginBottom()
       // 绑定侧边栏快捷选择事件
-      this.bindSidebarClickEvent()
+      // this.bindSidebarClickEvent()
       // 绑定列表元素选择事件
       this.bindItemClickEvent()
-    }).catch(log.warn)
+    }).then(this.bindSidebarClickEvent.bind(this)).catch(log.warn)
   }
 }
