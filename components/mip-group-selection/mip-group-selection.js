@@ -67,14 +67,16 @@ export default class MIPGroupSelection extends CustomElement {
   bindSidebarClickEvent () {
     // ios sf 环境中
     if (!MIP.standalone && util.platform.isIOS() && fixedElement && fixedElement._fixedLayer) {
-      let wrapper = fixedElement._fixedLayer.querySelector('.mip-group-selection-sidebar-wrapper')
-      alert(wrapper)
-      // util.event.delegate(wrapper, '.mip-group-selection-link', 'click', e => {
-      //   let button = e.target
-      //   let targetAnchor = button.dataset.targetAnchor
-      //   // 滚动待选列表到指定分组
-      //   this.scrollToAnchor(targetAnchor)
-      // })
+      alert(fixedElement._fixedLayer.outerHTML)
+      setTimeout(() => {
+        let wrapper = fixedElement._fixedLayer.querySelector('.mip-group-selection-sidebar-wrapper')
+        util.event.delegate(wrapper, '.mip-group-selection-link', 'click', e => {
+          let button = e.target
+          let targetAnchor = button.dataset.targetAnchor
+          // 滚动待选列表到指定分组
+          this.scrollToAnchor(targetAnchor)
+        })
+      }, 2000)
     } else {
       util.event.delegate(this.element, '.mip-group-selection-link', 'click', e => {
         let button = e.target
