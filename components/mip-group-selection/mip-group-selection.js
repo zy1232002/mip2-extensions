@@ -67,16 +67,22 @@ export default class MIPGroupSelection extends CustomElement {
   bindSidebarClickEvent () {
     // ios sf 环境中
     if (!MIP.standalone && util.platform.isIOS() && fixedElement && fixedElement._fixedLayer) {
-      alert(fixedElement._fixedLayer.querySelector('.mip-group-selection-sidebar-wrapper'))
-      setTimeout(() => {
-        let wrapper = fixedElement._fixedLayer.querySelector('.mip-group-selection-sidebar-wrapper')
-        util.event.delegate(wrapper, '.mip-group-selection-link', 'click', e => {
-          let button = e.target
-          let targetAnchor = button.dataset.targetAnchor
-          // 滚动待选列表到指定分组
-          this.scrollToAnchor(targetAnchor)
-        })
-      }, 1)
+      alert([...fixedElement._fixedLayer.children].map((el) => el.className).join(','))
+      // setTimeout(() => {
+      //   let wrapper = fixedElement._fixedLayer.querySelector('.mip-group-selection-sidebar-wrapper')
+      //   util.event.delegate(wrapper, '.mip-group-selection-link', 'click', e => {
+      //     let button = e.target
+      //     let targetAnchor = button.dataset.targetAnchor
+      //     // 滚动待选列表到指定分组
+      //     this.scrollToAnchor(targetAnchor)
+      //   })
+      // }, 1)
+      util.event.delegate(fixedElement._fixedLayer, '.mip-group-selection-link', 'click', e => {
+        let button = e.target
+        let targetAnchor = button.dataset.targetAnchor
+        // 滚动待选列表到指定分组
+        this.scrollToAnchor(targetAnchor)
+      })
     } else {
       util.event.delegate(this.element, '.mip-group-selection-link', 'click', e => {
         let button = e.target
