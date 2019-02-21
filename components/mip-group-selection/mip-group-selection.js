@@ -77,7 +77,7 @@ export default class MIPGroupSelection extends CustomElement {
       //     this.scrollToAnchor(targetAnchor)
       //   })
       // }, 1)
-      util.event.delegate(fixedElement._fixedLayer, '.mip-group-selection-link .mip-group-selection-sidebar-wrapper', 'click', e => {
+      util.event.delegate(fixedElement._fixedLayer, '.mip-group-selection-sidebar-wrapper .mip-group-selection-link', 'click', e => {
         let button = e.target
         let targetAnchor = button.dataset.targetAnchor
         // 滚动待选列表到指定分组
