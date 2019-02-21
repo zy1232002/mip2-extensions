@@ -9,7 +9,7 @@ const {
 } = MIP
 
 const log = util.log('mip-group-selection')
-// const { fixedElement } = viewer
+const { fixedElement } = viewer
 
 export default class MIPGroupSelection extends CustomElement {
   /**
@@ -64,24 +64,24 @@ export default class MIPGroupSelection extends CustomElement {
   /**
    * 绑定侧边栏快捷选择事件
    */
-  // bindSidebarClickEvent () {
-  //   // ios sf 环境中
-  //   if (!MIP.standalone && util.platform.isIOS() && fixedElement._fixedLayer) {
-  //     let wrapper = fixedElement._fixedLayer.querySelector('.mip-group-selection-sidebar-wrapper')
-  //     util.event.delegate(wrapper, '.mip-group-selection-link', 'click', e => {
-  //       let button = e.target
-  //       let targetAnchor = button.dataset.targetAnchor
-  //       // 滚动待选列表到指定分组
-  //       this.scrollToAnchor(targetAnchor)
-  //     })
-  //   } else {
-  //     util.event.delegate(this.element, '.mip-group-selection-link', 'click', e => {
-  //       let button = e.target
-  //       let targetAnchor = button.dataset.targetAnchor
-  //       this.scrollToAnchor(targetAnchor)
-  //     })
-  //   }
-  // }
+  bindSidebarClickEvent () {
+    // ios sf 环境中
+    if (!MIP.standalone && util.platform.isIOS() && fixedElement && fixedElement._fixedLayer) {
+      let wrapper = fixedElement._fixedLayer.querySelector('.mip-group-selection-sidebar-wrapper')
+      util.event.delegate(wrapper, '.mip-group-selection-link', 'click', e => {
+        let button = e.target
+        let targetAnchor = button.dataset.targetAnchor
+        // 滚动待选列表到指定分组
+        this.scrollToAnchor(targetAnchor)
+      })
+    } else {
+      util.event.delegate(this.element, '.mip-group-selection-link', 'click', e => {
+        let button = e.target
+        let targetAnchor = button.dataset.targetAnchor
+        this.scrollToAnchor(targetAnchor)
+      })
+    }
+  }
 
   /**
    * 滚动待选列表到指定分组
@@ -124,7 +124,7 @@ export default class MIPGroupSelection extends CustomElement {
       // 修改最下方分组的样式，增加 marginBottom, 保证滚动后分组标题可以在页面最上方
       this.modifyMarginBottom()
       // 绑定侧边栏快捷选择事件
-      // this.bindSidebarClickEvent()
+      this.bindSidebarClickEvent()
       // 绑定列表元素选择事件
       this.bindItemClickEvent()
     }).catch(log.warn)
