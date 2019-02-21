@@ -49,6 +49,7 @@ export default class MIPGroupSelection extends CustomElement {
   renderHtml (html) {
     let wrapper = document.createElement('div')
     wrapper.classList.add('mip-city-selection-wrapper')
+    alert('-----' + [...fixedElement._fixedLayer.children].map((el) => el.className).join(','))
     wrapper.innerHTML = html
     this.element.appendChild(wrapper)
   }
@@ -67,22 +68,16 @@ export default class MIPGroupSelection extends CustomElement {
   bindSidebarClickEvent () {
     // ios sf 环境中
     if (!MIP.standalone && util.platform.isIOS() && fixedElement && fixedElement._fixedLayer) {
-      alert([...fixedElement._fixedLayer.children].map((el) => el.className).join(','))
+      alert('++++++' + [...fixedElement._fixedLayer.children].map((el) => el.className).join(','))
       // setTimeout(() => {
-      //   let wrapper = fixedElement._fixedLayer.querySelector('.mip-group-selection-sidebar-wrapper')
-      //   util.event.delegate(wrapper, '.mip-group-selection-link', 'click', e => {
-      //     let button = e.target
-      //     let targetAnchor = button.dataset.targetAnchor
-      //     // 滚动待选列表到指定分组
-      //     this.scrollToAnchor(targetAnchor)
-      //   })
-      // }, 1)
-      util.event.delegate(fixedElement._fixedLayer, '.mip-group-selection-sidebar-wrapper .mip-group-selection-link', 'click', e => {
+      let wrapper = fixedElement._fixedLayer.querySelector('.mip-group-selection-sidebar-wrapper')
+      util.event.delegate(wrapper, '.mip-group-selection-link', 'click', e => {
         let button = e.target
         let targetAnchor = button.dataset.targetAnchor
         // 滚动待选列表到指定分组
         this.scrollToAnchor(targetAnchor)
       })
+      // }, 1)
     } else {
       util.event.delegate(this.element, '.mip-group-selection-link', 'click', e => {
         let button = e.target
@@ -133,9 +128,9 @@ export default class MIPGroupSelection extends CustomElement {
       // 修改最下方分组的样式，增加 marginBottom, 保证滚动后分组标题可以在页面最上方
       this.modifyMarginBottom()
       // 绑定侧边栏快捷选择事件
-      // this.bindSidebarClickEvent()
+      this.bindSidebarClickEvent()
       // 绑定列表元素选择事件
       this.bindItemClickEvent()
-    }).then(this.bindSidebarClickEvent.bind(this)).catch(log.warn)
+    }).catch(log.warn)
   }
 }
